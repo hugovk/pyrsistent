@@ -78,11 +78,11 @@ jobs:
       CIBW_MANYLINUX_AARCH64_IMAGE: manylinux2014
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up QEMU
         if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: all
 
@@ -97,7 +97,7 @@ jobs:
     name: Build source distribution and pure python wheel
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         name: Install Python
@@ -138,7 +138,7 @@ jobs:
 
       - name: Publish test release
         if: github.event.inputs.target == 'test'
-        uses: pypa/gh-action-pypi-publish@v1.5.1
+        uses: pypa/gh-action-pypi-publish@v1.8.9
         with:
           user: __token__
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
@@ -147,7 +147,7 @@ jobs:
 
       - name: Publish release
         if: github.event.inputs.target != 'test'
-        uses: pypa/gh-action-pypi-publish@v1.5.1
+        uses: pypa/gh-action-pypi-publish@v1.8.9
         with:
          user: __token__
          password: ${{ secrets.PYPI_API_TOKEN }}
